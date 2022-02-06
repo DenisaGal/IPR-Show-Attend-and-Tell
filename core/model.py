@@ -131,13 +131,14 @@ class CaptionGenerator(object):
             return out_logits
 
     def _batch_norm(self, x, mode='train', name=None):
-        return tf2.layers.batch_normalization(inputs=x,
+        return tf.layers.batch_normalization(inputs=x,
                                             momentum=0.95,
                                             center=True,
                                             scale=True,
-                                            is_training=(mode=='train'),
-                                            updates_collections=None,
-                                            scope=(name+'batch_norm'))
+                                            # is_training=(mode=='train')
+                                            #training=False, trainable=True,
+                                            #updates_collections=None,
+                                            name=(name+'batch_norm'))
 
     def build_model(self):
         features = self.features

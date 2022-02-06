@@ -50,11 +50,11 @@ class CaptioningSolver(object):
 
         # set an optimizer by update rule
         if self.update_rule == 'adam':
-            self.optimizer = tf.optimizers.Adam()
+            self.optimizer = tf.keras.optimizers.Adam#tf.optimizers.Adam()
         elif self.update_rule == 'momentum':
-            self.optimizer = tf.optimizers.Momentum()
+            self.optimizer = tf.keras.optimizers.Momentum#tf.optimizers.Momentum()
         elif self.update_rule == 'rmsprop':
-            self.optimizer = tf.optimizers.RMSProp()
+            self.optimizer = tf.keras.optimizers.RMSProp#tf.optimizers.RMSProp()
 
         if not os.path.exists(self.model_path):
             os.makedirs(self.model_path)
@@ -84,8 +84,8 @@ class CaptioningSolver(object):
         # train op
         with tf.compat.v1.variable_scope(tf.compat.v1.get_variable_scope(), reuse=False):
             optimizer = self.optimizer(learning_rate=self.learning_rate)
-            grads = tf.gradients(loss, tf.trainable_variables())
-            grads_and_vars = list(zip(grads, tf.trainable_variables()))
+            grads = tf.gradients(loss, tf.compat.v1.trainable_variables())
+            grads_and_vars = list(zip(grads, tf.compat.v1.trainable_variables()))
             train_op = optimizer.apply_gradients(grads_and_vars=grads_and_vars)
 
         # summary op
